@@ -174,11 +174,42 @@ namespace Trees.BTree
 			return res;
 		}
 
-		internal void CopyAllPairsToTheList(List<(TKey key, TValue value)> pairs)
+
+		internal void CopyAllPairsToTheList(List<BTreeNode<TKey, TValue>> pairs)
 		{
 			_left?.CopyAllPairsToTheList(pairs);
-			pairs.Add((_key, _value));
+			pairs.Add(this);
 			_right?.CopyAllPairsToTheList(pairs);
+		}
+
+
+		internal void SetLeftChildren(List<BTreeNode<TKey, TValue>> pairs, int firstIndex, int lastIndex)
+		{
+			if (firstIndex > lastIndex)
+			{
+				_left = null;
+				return;
+			}
+
+			int middleIndex = (firstIndex + lastIndex) >> 1;
+			_left = pairs[middleIndex];
+			_left.SetLeftChildren(pairs, firstIndex, middleIndex - 1);
+			_left.SetRightChildren(pairs, middleIndex + 1, lastIndex);
+		}
+
+
+		internal void SetRightChildren(List<BTreeNode<TKey, TValue>> pairs, int firstIndex, int lastIndex)
+		{
+			if (firstIndex > lastIndex)
+			{
+				_right = null;
+				return;
+			}
+
+			int middleIndex = (firstIndex + lastIndex) >> 1;
+			_right = pairs[middleIndex];
+			_right.SetLeftChildren(pairs, firstIndex, middleIndex - 1);
+			_right.SetRightChildren(pairs, middleIndex + 1, lastIndex);
 		}
 	}
 }

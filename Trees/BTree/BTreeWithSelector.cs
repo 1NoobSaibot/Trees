@@ -96,9 +96,16 @@ namespace Trees.BTree
 			}
 
 			int count = _root.Count();
-			List<(TKey key, TValue value)> pairs = new(count);
+			List<BTreeNode<TKey, TValue>> pairs = new(count);
 			_root.CopyAllPairsToTheList(pairs);
-			_root = new(pairs);
+
+			int firstIndex = 0;
+			int lastIndex = pairs.Count - 1;
+			int middleIndex = lastIndex >> 1;
+
+			_root = pairs[middleIndex];
+			_root.SetLeftChildren(pairs, firstIndex, middleIndex - 1);
+			_root.SetRightChildren(pairs, middleIndex + 1, lastIndex);
 		}
 	}
 }
