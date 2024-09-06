@@ -2,7 +2,7 @@
 
 namespace Trees.BTree
 {
-	internal class BTreeWithSelector<TKey, TValue>
+	public class BTreeWithSelector<TKey, TValue>
 		: IBTreeCollection<TKey, TValue>
 		where TKey : INumber<TKey>
 	{
