@@ -7,7 +7,7 @@ namespace Trees.BTree
 		where TKey : INumber<TKey>
 	{
 		private BTreeNode<TKey, TValue>? _root;
-		private readonly List<TValue> _valuesSelector = new();
+		private readonly List<TValue> _valuesSelector = [];
 		private const int REBALANCE_EVERY_ADDS = 5000;
 		private int _adds = 0;
 
